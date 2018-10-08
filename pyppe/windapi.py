@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from WindPy import *
 
-from .periods import tdays_prev, to_date
+from .tdays import tdays_prev, to_date
 
 def wind_series(wcodes, fields, s_date, e_date, **kwargs):
     s_date = tdays_prev(to_date(s_date), **kwargs)
