@@ -128,8 +128,9 @@ def single_index_model(x, benchmark):
     }
 
     return result_dict
- 
- def treynor_mazuy_model(r, benchmark, risk_free):
+
+
+def treynor_mazuy_model(r, benchmark, risk_free):
     def tm_model(r, alpha, beta, gamma):
         return alpha + beta * r + gamma * r * r
     
