@@ -3,7 +3,7 @@ A Python library for portfolio performance evaluation. - Oct 2018
 
 [中文]
 
-pyppe是一个用于组合业绩评估的Python库，数据结构和统计算法主要依托于pandas、scipy以及stats，并通过Wind API获得市场数据（使用者需要拥有Wind账号并获得Wind API的使用权限）。
+pyppe是一个用于组合业绩评估的Python库，数据结构和统计算法主要依托于pandas、scipy以及statsmodel，并通过Wind API获得市场数据（使用者需要拥有Wind账号并获得Wind API的使用权限）。
 
 pyppe主要帮助分析师解决三个问题：
 
