@@ -1,42 +1,59 @@
 import datetime as dt
 import pandas as pd
 from WindPy import *
+w.start()
+
 
 # return today's date
 def today():
     return dt.datetime.today().date()
 
+
 # return yesterday's date
 def yesterday():
-    return today() - dt.timedelta(days=1)
+    return today() - dt.timedelta(days=1) # today-1
+
 
 # return tomorrow's date
 def tomorrow():
-    return today() - dt.timedelta(days=-1)
+    return today() - dt.timedelta(days=-1) # today+1
+
 
 # trans date format from string to datetime.date
 def to_date(date):
     if isinstance(date, str):
-        date = dt.datetime.strptime(date, "%Y-%m-%d").date()
+        date = dt.datetime.strptime(date, "%Y-%m-%d").date() # YYYY-MM-DD
         
     return date
+
 
 # return previous(most recent) trading day's date
 # from today or a paticular date
 def tdays_prev(date=None, **kwargs):
-    date = to_date(date)
+    edate = to_date(date) # end date
     options = ";".join([k + "=" + v for k, v in kwargs.items()])
     
-    wind_data = w.tdays("ED-0TD", date, options)
-    tdate = wind_data.Times[0]
+    wind_data = w.tdays("ED-0TD", edate, options)
+
+    return wind_data.Times[0] # datetime.date
+
+
+# return next trading day's date
+# from today or a paticular date
+def tdays_next(date=None, **kwargs):
+    sdate = to_date(date) # start date
+    options = ";".join([k + "=" + v for k, v in kwargs.items()])
     
-    return tdate
+    wind_data = w.tdays(sdate, "SD+1TD", options)
+    
+    return wind_data.Times[0] # datetime.date
+
 
 # return previous(most recent) trading day's date
 # from a [offset] of a paticular date
 def tdays_offset(offset, date, **kwargs):
     if offset[-2:].upper() == "TD":
-        prd = "TD"
+        prd = "TD"  # trading day
         offset = int(offset[:-2])
     else:
         prd = offset[-1:].upper()
@@ -47,18 +64,20 @@ def tdays_offset(offset, date, **kwargs):
     options = options + ";period=" + prd
     
     wind_data = w.tdaysoffset(offset, date, options)
-    tdate = wind_data.Times[0]
     
-    return tdate
+    return wind_data.Times[0] # datetime.date
+    
 
 # return the nearest trading day's date
+# Sat -> Fri, Sun -> Mon
 def tdays_nearest(date=None, **kwargs):
     date = today() if date is None else to_date(date)
     options = ";".join([k + "=" + v for k, v in kwargs.items()])
     
-    prev_tdate = tdays_offset("-0TD", date, **kwargs)
-    next_tdate = tdays_offset("1TD", date, **kwargs)
+    prev_tdate = tdays_prev(date, **kwargs)
+    next_tdate = tdays_next(date, **kwargs)
 
+    # prev_tdate <- prev_delta -> date <- next_delta -> next_tdate
     prev_delta = date - prev_tdate
     next_delta = next_tdate - date
     
@@ -70,12 +89,12 @@ def tdays_nearest(date=None, **kwargs):
         return next_tdate
     
 # return a date series of trading day from start date to end date
-def tdays_series(s_date, e_date=None, **kwargs):
-    s_date = to_date(s_date)
-    e_date = today() if e_date is None else to_date(e_date)
+def tdays_series(sdate, edate=None, **kwargs):
+    sdate = to_date(sdate)
+    edate = today() if edate is None else to_date(edate)
     options = ";".join([k + "=" + v for k, v in kwargs.items()])
     
-    wsd_data = w.tdays(s_date, e_date, options)
+    wsd_data = w.tdays(sdate, edate, options)
     
     if wsd_data.Data:
         return pd.Series(wsd_data.Data[0], index=wsd_data.Times)
@@ -83,12 +102,5 @@ def tdays_series(s_date, e_date=None, **kwargs):
         return None
     
 # count how many trading days from start date to end date
-def tdays_count(s_date, e_date=None, **kwargs):
-    s_date = to_date(s_date)
-    e_date = today() if e_date is None else to_date(e_date)
-    options = ";".join([k + "=" + v for k, v in kwargs.items()])
-    
-    wsd_data = w.tdayscount(s_date, e_date, options)
-    count = wsd_data.Data[0][0]
-    
-    return count
+def tdays_count(sdate, edate=None, **kwargs):
+    return return len(tdays_series(sdate, edate=None, **kwargs))
