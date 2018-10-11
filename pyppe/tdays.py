@@ -71,7 +71,7 @@ def tdays_offset(offset, date, **kwargs):
 # return the nearest trading day's date
 # Sat -> Fri, Sun -> Mon
 def tdays_nearest(date=None, **kwargs):
-    date = today() if date is None else to_date(date)
+    date = today() if date is None else to_date(date) # if None, today
     options = ";".join([k + "=" + v for k, v in kwargs.items()])
     
     prev_tdate = tdays_prev(date, **kwargs)
@@ -90,8 +90,8 @@ def tdays_nearest(date=None, **kwargs):
     
 # return a date series of trading day from start date to end date
 def tdays_series(sdate, edate=None, **kwargs):
-    sdate = to_date(sdate)
-    edate = today() if edate is None else to_date(edate)
+    sdate = to_date(sdate) # start date
+    edate = today() if edate is None else to_date(edate) # end date, if None, today
     options = ";".join([k + "=" + v for k, v in kwargs.items()])
     
     wsd_data = w.tdays(sdate, edate, options)
@@ -103,4 +103,4 @@ def tdays_series(sdate, edate=None, **kwargs):
     
 # count how many trading days from start date to end date
 def tdays_count(sdate, edate=None, **kwargs):
-    return return len(tdays_series(sdate, edate=None, **kwargs))
+    return len(tdays_series(sdate, edate=None, **kwargs))
