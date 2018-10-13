@@ -42,3 +42,41 @@ def trailing_rbsa(rets, style, period="m"):
         factors.append(minout.x)
 
     return pd.DataFrame(factors, index=idx, columns=cols)
+
+
+# single index model
+def single_index_model(x, benchmark):
+    x = df_to_series(x)
+    benchmark = df_to_series(benchmark)
+        
+    beta, alpha, rvalue, pvalue, stderr = stats.linregress(benchmark, x)
+    
+    result_dict = {
+        "alpha":alpha,
+        "beta":beta,
+        "rvalue":rvalue,
+        "pvalue":pvalue,
+        "stderr":stderr
+    }
+
+    return result_dict
+
+
+# Treynor-Mazuy model(T-M model)
+def treynor_mazuy_model(r, benchmark, risk_free):
+    def tm_model(r, alpha, beta, gamma):
+        return alpha + beta * r + gamma * r * r
+    
+    r = df_to_series(r) - risk_free
+    benchmark = df_to_series(benchmark) - risk_free
+    
+    (alpha, beta, gamma), pcov = curve_fit(tm_model, benchmark, r)
+    
+    result_dict = {
+        "alpha":alpha,
+        "beta":beta,
+        "gamma":gamma,
+        "stderr":np.sqrt(np.diag(pcov))
+    }
+    
+    return result_dict
