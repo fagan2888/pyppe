@@ -5,6 +5,8 @@
 
 pyppe is a Python library for portfolio performance evaluation. pyppe's data format, structure and main statistical models are built on pandas, scipy, statsmodel and matplotlib. Market data are fetched via Wind API.
 
+![image](https://github.com/s-t-li/pyppe/blob/master/pyppe.jpg)
+
 pyppe gives pratical help to FOF/MOM managers on 3 questions:
 
 1. What was the portfolio's performance?
