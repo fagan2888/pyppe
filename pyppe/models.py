@@ -15,9 +15,12 @@ from .windapi import wind_series
 # L: large, M: middle, S: small, H: high, L: low
 csi_300_gv = ["000918.SH", "000919.SH"]
 
-cni_cgv = ["399372.SZ", "399373.SZ", # LC-G, LC-V
-           "399374.SZ", "399375.SZ", # MC-G, MC-V
-           "399376.SZ", "399377.SZ"] # SC-G, SC-V
+cni_cgv_4 = ["399372.SZ", "399373.SZ", # LC-G, LC-V
+             "399376.SZ", "399377.SZ"] # SC-G, SC-V
+
+cni_cgv_6 = ["399372.SZ", "399373.SZ", # LC-G, LC-V
+             "399374.SZ", "399375.SZ", # MC-G, MC-V
+             "399376.SZ", "399377.SZ"] # SC-G, SC-V
 
 cni_gv = ["399370.SZ", "399371.SZ"] # G, V
 
