@@ -10,6 +10,25 @@ from WindPy import *
 from .periods import prds_per_year
 from .windapi import wind_series
 
+# some style index suites (Wind code)
+# C: capital, V: value, G: growth, PE: price to earnings
+# L: large, M: middle, S: small, H: high, L: low
+csi_300_gv = ["000918.SH", "000919.SH"]
+
+cni_cgv = ["399372.SZ", "399373.SZ", # LC-G, LC-V
+           "399374.SZ", "399375.SZ", # MC-G, MC-V
+           "399376.SZ", "399377.SZ"] # SC-G, SC-V
+
+cni_gv = ["399370.SZ", "399371.SZ"] # G, V
+
+citic_style = ["CI005917.WI", "CI005918.WI", # finance, cycle
+               "CI005919.WI", "CI005920.WI", # consumption, growth
+               "CI005921.WI"] # stable
+
+sws_c = ["801811.SI", "801812.SI", "801813.SI"] # LC, MC, SC
+sws_pe = ["801821.SI", "801822.SI", "801823.SI"] # HPE, MPE, LPE
+sws_price = ["801841.SI", "801842.SI", "801843.SI"] #HPRICE, MPRICE, LPRICE
+
 
 # calc trailing return based style analysis(rbsa)
 def trailing_rbsa(rets, style, period="m"):
