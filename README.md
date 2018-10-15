@@ -5,7 +5,7 @@
 
 pyppe's data format, structure and main statistical models are built on pandas, scipy, statsmodel and matplotlib. Market data are fetched via Wind API.
 
-![image](https://github.com/s-t-li/pyppe/blob/master/pyppe.jpg)
+![image](https://github.com/s-t-li/pyppe/blob/master/pyppe-oct15-2018.jpg)
 
 pyppe gives pratical help to FOF/MOM managers on 3 questions:
 
