@@ -27,8 +27,8 @@ def df_to_series(df):
         return df
 
 
-# return the minimum along columns
-def max(x):
+# return the maximum along columns
+def maximum(x):
     """
     #Func:
         return the maximum along columns
@@ -44,7 +44,7 @@ def max(x):
     
 
 # return the minimum along columns
-def min(x):
+def minimum(x):
     """
     #Func:
         return the minimum along columns
@@ -373,45 +373,69 @@ def rebase(x, base):
         return x / x[0] * base
 
 
-# return simple returns series from prices series
+# return simple rate of returns series from prices series
 def to_simple_rets(prices):
     """
     #Func:
-    return simple returns series from prices series
+    return simple rate of returns series from prices series
     
     #Params:
     prices: prices series in pandas dataframe, pandas series or numpy array
 
     #Return:
-    simple returns series
+    simple rate of returns series
     """
 
     if isinstance(prices, (pd.DataFrame, pd.Series)):
         rets = prices.pct_change().iloc[1:]
     else:
+        # assume np.ndarray
         prices_dif = np.diff(prices, axis=0)
         rets = np.divide(prices_dif, p[:-1])
 
     return rets
 
 
-# return log returns series from prices series
+# return log rate of returns series from prices series
 def to_log_rets(prices):
     """
     #Func:
-    return log returns series from prices series
+    return log rate of returns series from prices series
     
     #Params:
     prices: prices series in pandas dataframe, pandas series or numpy array
 
     #Return:
-    simple log series
+    log rate of returns series
     """
 
     if isinstance(prices, (pd.DataFrame, pd.Series)):
         rets = np.log(prices).diff().iloc[1:]
     else:
+        # assume np.ndarray
         rets = np.diff(np.log(prices), axis=0)
+
+    return rets
+
+
+# return CAGR returns from prices series
+def to_cagr_rets(prices):
+    """
+    #Func:
+    return CAGR returns from prices series
+    
+    #Params:
+    prices: prices series in pandas dataframe, pandas series or numpy array
+
+    #Return:
+    CAGR rate of return
+    """
+
+    if isinstance(prices, (pd.DataFrame, pd.Series)):
+        rets = prices.iloc[-1] / prices.iloc[0] - 1
+    else:
+        # assume np.ndarray
+        rets = prices[-1] / prices[0] - 1
 
     return rets
 
