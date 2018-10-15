@@ -27,6 +27,126 @@ def df_to_series(df):
         return df
 
 
+# return the minimum along columns
+def max(x):
+    """
+    #Func:
+        return the maximum along columns
+    
+    #Params:
+        x: pd.DataFrame, pd.Series or np.ndarray
+    
+    #Return:
+        the maximum
+    """
+    
+    return x.max(axis=0)
+    
+
+# return the minimum along columns
+def min(x):
+    """
+    #Func:
+        return the minimum along columns
+    
+    #Params:
+        x: pd.DataFrame, pd.Series or np.ndarray
+    
+    #Return:
+        the minimum
+    """
+    
+    return x.min(axis=0)
+    
+
+# return the median along columns
+def median(x):
+    """
+    #Func:
+        return the median along columns
+    
+    #Params:
+        x: pd.DataFrame, pd.Series or np.ndarray
+    
+    #Return:
+        the median
+    """
+    
+    if isinstance(x, (pd.DataFrame, pd.Series)):
+        return x.median(axis=0)
+    else:
+        # assume np.ndarray
+        return np.median(x, axis=0)
+
+
+# return the arithmetic average along columns
+def arith_avg(x):
+    """
+    #Func:
+        return the arithmetic average along columns
+    
+    #Params:
+        x: pd.DataFrame, pd.Series or np.ndarray
+    
+    #Return:
+        the arithmetic average
+    """
+    
+    if isinstance(x, (pd.DataFrame, pd.Series)):
+        return x.mean(axis=0)
+    else:
+        # assume np.ndarray
+        return x.mean(axis=0)
+
+
+# return the geometric mean along columns
+def geo_avg(x):
+    """
+    #Func:
+        return the geometric mean along columns
+    
+    #Params:
+        x: pd.DataFrame, pd.Series or np.ndarray
+    
+    #Return:
+        the geometric mean
+    """
+    
+    if isinstance(x, (pd.DataFrame, pd.Series)):
+        prod = x.product(axis=0)
+    else:
+        # assume np.ndarray
+        prod = np.product(x, axis=0)
+        
+    return prod ** (1.0 / len(x))
+
+
+# return the weighted average along columns
+def wgt_avg(x, weights):
+    """
+    #Func:
+        return the weighted average along columns
+    
+    #Params:
+        x: pd.DataFrame (single column or multi columns), pd.Series or np.ndarray
+        weights: pd.DataFrame (single column), pd.Series or np.ndarray
+    
+    #Return:
+        the weighted average
+    """
+    
+    if isinstance(weights, pd.DataFrame):
+        weights = weights[weights.columns[0]]
+    
+    if isinstance(x, (pd.DataFrame, pd.Series)):
+        wgt_mul = x.mul(weights, axis=0)
+    else:
+        # assume np.ndarray
+        wgt_mul = np.multiply(x, weights)
+    
+    return wgt_mul.sum(axis=0) / weights.sum()
+
+
 # calc standard deviation of series x
 def std(x, dof=1):
     """
