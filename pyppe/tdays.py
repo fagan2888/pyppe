@@ -59,7 +59,7 @@ def tdays_prev(date=None, **kwargs):
     
     # ED-0TD is Wind date macro, ref: https://www.windquant.com/
     # 0 trading day before end date
-    wind_data = w.tdays("ED-0TD", edate, options)
+    wind_data = w.tdays("ED-0TD", edate, **kwargs)
 
     return wind_data.Times[0] # datetime.date
 
@@ -84,7 +84,7 @@ def tdays_next(date=None, **kwargs):
     
     # SD+1TD is Wind date macro, ref: https://www.windquant.com/
     # 1 trading day after start date
-    wind_data = w.tdays(sdate, "SD+1TD", options)
+    wind_data = w.tdays(sdate, "SD+1TD", **kwargs)
     
     return wind_data.Times[0] # datetime.date
 
@@ -173,7 +173,7 @@ def tdays_series(sdate, edate=None, **kwargs):
     sdate = to_date(sdate) # start date
     edate = today() if edate is None else to_date(edate) # end date, if None, today
     
-    wsd_data = w.tdays(sdate, edate, options)
+    wsd_data = w.tdays(sdate, edate, **kwargs)
     
     if wsd_data.Data:
         return pd.Series(wsd_data.Data[0], index=wsd_data.Times)
