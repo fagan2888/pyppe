@@ -48,7 +48,7 @@ def wind_series(wcodes, fields, sdate, edate, **kwargs):
             # Error Code: ref: https://www.windquant.com/
             raise Exception("Wind Error Code:" + str(wind_data.ErrorCode))
         
-        wcodes_col = [code] * fields_len # like ["000300.SH", "000300.SH"]
+        wcodes_col = [code.upper()] * fields_len # like ["000300.SH", "000300.SH"]
 
         idx = pd.MultiIndex.from_arrays([wcodes_col, wind_data.Fields])
         sub_df = pd.DataFrame(wind_data.Data, index=idx, columns=wind_data.Times).T
